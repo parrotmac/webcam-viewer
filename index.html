@@ -45,12 +45,13 @@
             position: absolute;
             margin: 0;
             padding: 0.25em;
-            top: -10rem;
+            top: -100vh;
             background-color: rgb(128, 128, 128, 0.50);
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: row;
+            border-radius: 0.25em;
 
             transition: top 0.25s ease-in-out;
         }
@@ -82,15 +83,22 @@
         #controls.visible {
             top: 0;
         }
+
+        @media screen and (max-width: 720px) {
+            #controls {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
 <div id="controls-activation">
     <div id="controls">
-        <button class="control-btn" id="mirror-x">Mirror X</button>
-        <button class="control-btn" id="mirror-y">Mirror Y</button>
-        <div class="control-spacer"></div>
-        <button class="control-btn" id="freeze">Pause</button>
+        <div class="control-btn-group">
+            <button class="control-btn" id="mirror-x">Mirror X</button>
+            <button class="control-btn" id="mirror-y">Mirror Y</button>
+            <button class="control-btn" id="freeze">Pause</button>
+        </div>
         <label for="video-input" id="video-input-label" class="video-input">
             Video Input
             <select id="video-input"></select>
