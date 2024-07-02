@@ -135,10 +135,30 @@
         }
     }
 
+    function toggleControls() {
+        if (controls.classList.contains('visible')) {
+            hideControls();
+        } else {
+            showControls();
+        }
+    }
+
     // Controls hot zone
     const controlsActivation = document.querySelector("#controls-activation");
     controlsActivation.addEventListener('mouseenter', showControls, false);
     controlsActivation.addEventListener('mouseleave', hideControls, false);
+
+    // Clicking video shows controls
+    video.addEventListener('click', (event) => {
+        if (event.detail === 1) {
+            toggleControls();
+        } else if (event.detail === 2) {
+            // cycle through video inputs
+            const currentInput = videoInput.selectedIndex;
+            videoInput.selectedIndex = currentInput + 1 < videoInput.length ? currentInput + 1 : 0;
+            videoInput.dispatchEvent(new Event('change'));
+        }
+    })
 </script>
 </body>
 </html>
