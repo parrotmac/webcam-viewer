@@ -10,6 +10,7 @@
             padding: 0;
             height: 100%;
             background-color: black;
+            font-family: sans-serif;
         }
 
         body {
@@ -43,12 +44,39 @@
             z-index: 15;
             position: absolute;
             margin: 0;
-            padding: 0;
+            padding: 0.25em;
             top: -10rem;
-            background-color: rgb(128, 128, 128);
-            display: block;
+            background-color: rgb(128, 128, 128, 0.50);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
 
-            transition: top 0.5s ease-in-out;
+            transition: top 0.25s ease-in-out;
+        }
+
+        .control-btn {
+            margin: 0.5em;
+            padding: 0.5em;
+            font-size: 1em;
+            background-color: rgb(0, 0, 0);
+            color: rgb(255, 255, 255);
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 0.25em;
+        }
+
+        .control-spacer {
+            border: 0;
+        }
+
+        .video-input {
+            margin: 0.5em;
+            padding: 0.5em;
+            font-size: 1em;
+            background-color: rgb(0, 0, 0);
+            color: rgb(255, 255, 255);
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 0.25em;
         }
 
         #controls.visible {
@@ -59,9 +87,11 @@
 <body>
 <div id="controls-activation">
     <div id="controls">
-        <button id="mirror-x">Mirror X</button>
-        <button id="mirror-y">Mirror Y</button>
-        <label for="video-input">
+        <button class="control-btn" id="mirror-x">Mirror X</button>
+        <button class="control-btn" id="mirror-y">Mirror Y</button>
+        <div class="control-spacer"></div>
+        <button class="control-btn" id="freeze">Pause</button>
+        <label for="video-input" id="video-input-label" class="video-input">
             Video Input
             <select id="video-input"></select>
         </label>
@@ -119,6 +149,19 @@
     }, (error) => {
         console.error(error);
     });
+
+    // Freeze
+    const freeze = document.querySelector("#freeze");
+    freeze.addEventListener('click', (ev) => {
+        if (video.paused) {
+            video.play();
+            freeze.innerText = 'Pause';
+        } else {
+            video.pause();
+            freeze.innerText = 'Resume';
+        }
+    }, false);
+
 
     // Controls
     const controls = document.querySelector("#controls");
