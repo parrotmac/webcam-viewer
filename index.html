@@ -105,7 +105,7 @@
         </label>
     </div>
 </div>
-<video id="camera-output"></video>
+<video id="camera-output" autoplay="false" muted="true" playsinline="true"></video>
 <script>
     // Mirroring
     const toggleMirrorX = document.querySelector("#mirror-x");
@@ -121,7 +121,6 @@
     // Video Input & Output
     const video = document.querySelector('#camera-output');
     const videoInput = document.querySelector("#video-input");
-    navigator.getMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
     navigator.mediaDevices.enumerateDevices().then((devices) => {
         devices.forEach((device) => {
             if (device.kind === 'videoinput') {
@@ -142,19 +141,21 @@
                 }
             }
         };
-        navigator.getMedia(constraints, (stream) => {
+        navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
             video.srcObject = stream;
             video.play();
-        }, (error) => {
+        }).catch((error) => {
             console.error(error);
         });
     }, false);
 
     // Start video
-    navigator.getMedia({video: true, audio: false}, (stream) => {
+    navigator.mediaDevices.getUserMedia({video: true, audio: false}).then((stream) => {
         video.srcObject = stream;
-        video.play();
-    }, (error) => {
+        video.play().catch((error) => {
+            console.error(error);
+        })
+    }).catch((error) => {
         console.error(error);
     });
 
